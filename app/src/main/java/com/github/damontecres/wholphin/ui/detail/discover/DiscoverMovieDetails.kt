@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleResumeEffect
+import androidx.tv.material3.Button
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
 import com.github.damontecres.wholphin.R
@@ -116,6 +117,9 @@ fun DiscoverMovieDetails(
                     viewModel.requestOnClick()
                     showRequestDialog = true
                 },
+                addToWatchlistOnClick = {
+                    viewModel.addToWatchlist()
+                },
                 cancelOnClick = {
                     movie.id?.let { viewModel.cancelRequest(it) }
                 },
@@ -190,6 +194,7 @@ fun DiscoverMovieDetailsContent(
     similar: List<DiscoverItem>,
     recommended: List<DiscoverItem>,
     requestOnClick: () -> Unit,
+    addToWatchlistOnClick: () -> Unit,
     cancelOnClick: () -> Unit,
     trailerOnClick: (Trailer) -> Unit,
     overviewOnClick: () -> Unit,
@@ -261,6 +266,12 @@ fun DiscoverMovieDetailsContent(
                                 .padding(bottom = 16.dp)
                                 .focusRequester(focusRequesters[HEADER_ROW]),
                     )
+                    Button(
+                        onClick = addToWatchlistOnClick,
+                        modifier = Modifier.padding(bottom = 16.dp),
+                    ) {
+                        Text(text = "Add to Watchlist")
+                    }
                 }
             }
             if (people.isNotEmpty()) {
