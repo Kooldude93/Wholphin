@@ -260,6 +260,23 @@ class DiscoverMovieViewModel
                 }
             }
         }
+
+        fun addToWatchlist() {
+            viewModelScope.launchIO {
+                try {
+                    seerrService.api.watchlistApi.createWatchlist(
+                        tmdbId = item.id,
+                        mediaType = "movie",
+                    )
+                    showToast(context, "Added to watchlist")
+                } catch (ex: CancellationException) {
+                    throw ex
+                } catch (ex: Exception) {
+                    Timber.e(ex, "Failed to add to watchlist")
+                    showToast(context, "Failed to add to watchlist")
+                }
+            }
+        }
     }
 
 fun canUserCancelRequest(
